@@ -3,8 +3,10 @@ package encje;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name="IdZgloszenia")
 public class ZgloszenieZewnetrzne extends Zgloszenie {
     @ManyToOne
     @JoinColumn(name = "IdKlienta")

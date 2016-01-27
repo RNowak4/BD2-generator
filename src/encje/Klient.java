@@ -1,12 +1,13 @@
 package encje;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Klient {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idKlienta")
     private Integer id;
 
     @ManyToOne

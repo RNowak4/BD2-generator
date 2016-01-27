@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Zgloszenie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

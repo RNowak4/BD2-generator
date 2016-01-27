@@ -2,8 +2,10 @@ package encje;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name="idPlacowki")
 public class Wypozyczalnia extends Placowka {
     @OneToOne
     // redundancja??

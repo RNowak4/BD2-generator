@@ -3,8 +3,10 @@ package encje;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name="idKlienta")
 public class KlientIndywidualny extends Klient {
     @Basic
     @Column(name = "Imie")
