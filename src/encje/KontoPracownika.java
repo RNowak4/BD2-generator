@@ -7,7 +7,6 @@ import java.util.Date;
 @Table(name = "KontoPracownika")
 public class KontoPracownika {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "login", length = 64)
     private String login;
 

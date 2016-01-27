@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Rezerwacja {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id_rezerwacji")
+    @Column(name = "IdRezerwacji")
     private int id;
 
     @Basic
