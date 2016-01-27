@@ -22,7 +22,6 @@ public class Czynnosc {
     @JoinColumn(name = "idPracownika")
     private Pracownik pracownik;
 
-    // TODO ???
     @ManyToOne
     @JoinColumn(name = "idZgloszenia")
     private Zgloszenie zgloszenie;

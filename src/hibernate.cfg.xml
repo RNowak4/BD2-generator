@@ -32,6 +32,8 @@
         <mapping class="encje.TypZgloszenia"/>
         <mapping class="encje.Wypozyczalnia"/>
         <mapping class="encje.Zgloszenie"/>
+        <mapping class="encje.ZgloszenieWewnetrzne"/>
+        <mapping class="encje.ZgloszenieZewnetrzne"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

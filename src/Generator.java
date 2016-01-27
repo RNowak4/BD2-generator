@@ -1,4 +1,5 @@
 import encje.*;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,12 +18,14 @@ public class Generator {
     private List<Magazyn> magazyny = new ArrayList<>();
     private List<Samochod> samochody = new ArrayList<>();
     private List<TypZgloszenia> typyZgloszen = new ArrayList<>();
-    private List<Zgloszenie> zgloszenia = new ArrayList<>();
+    private List<ZgloszenieWewnetrzne> zgloszeniaWewnetrzne = new ArrayList<>();
+    private List<ZgloszenieZewnetrzne> zgloszeniaZewnetrzne = new ArrayList<>();
     private List<Czynnosc> czynnosci = new ArrayList<>();
     private List<KontoPracownika> kontaPraciwnikow = new ArrayList<>();
     private List<KlientIndywidualny> klienciIndywidualni = new ArrayList<>();
     private List<KlientInstytucjonalny> klienciInstytucjonalni = new ArrayList<>();
     private List<KontoKlienta> kontaKlientow = new ArrayList<>();
+    private List<Wypozyczenie> wypozyczenia = new ArrayList<>();
 
     private static String[] miasta = {"Warszawa", "Poznan", "Gdansk", "Rzeszow", "Krakow"};
     private static String[] poczt = {"11-111", "22-222", "33-333", "44-444", "55-555"};
@@ -35,13 +38,92 @@ public class Generator {
         generujMarki();
         generujKategoriePojazdu();
         generujSamochody();
-        generujCzynnosci(1500);
         generujTypZgloszenia();
-        generujZgloszenia(1500);
         generujMaterialy(3000);
         generujKontaPracownikow();
         generujKlientow(150, 2000, 0);
         generujKontaKlientow();
+        generujWypozyczenia();
+        generujZgloszenia(1500);
+        generujCzynnosci(1500);
+    }
+
+    public void save(final Session session) {
+        for (Adres adres : adresy) {
+            session.save(adres);
+        }
+
+        for (Dyrektor dyrektor : dyrektorzy) {
+            session.save(dyrektor);
+        }
+
+        for (Kierownik kierownik : kierownicy) {
+            session.save(kierownik);
+        }
+
+        for (Szeregowy szeregowy : szeregowi) {
+            session.save(szeregowy);
+        }
+
+        for (Marka marka : marki) {
+            session.save(marka);
+        }
+
+        for (KategoriaPojazdu kategoriaPojazdu : kategoriePojazdu) {
+            session.save(kategoriaPojazdu);
+        }
+
+        for (Wypozyczalnia wypozyczalnia : wypozyczalnie) {
+            session.save(wypozyczalnia);
+        }
+
+        for (Serwis serwis : serwisy) {
+            session.save(serwis);
+        }
+
+        for (Magazyn magazyn : magazyny) {
+            session.save(magazyn);
+        }
+
+        for (Samochod samochod : samochody) {
+            session.save(samochod);
+        }
+
+        for (TypZgloszenia typZgloszenia : typyZgloszen) {
+            session.save(typZgloszenia);
+        }
+
+        for (ZgloszenieZewnetrzne zgloszenieZewnetrzne : zgloszeniaZewnetrzne) {
+            session.save(zgloszenieZewnetrzne);
+        }
+
+        for (ZgloszenieWewnetrzne zgloszenieWewnetrzne : zgloszeniaWewnetrzne) {
+            session.save(zgloszenieWewnetrzne);
+        }
+
+        for (Czynnosc czynnosc : czynnosci) {
+            session.save(czynnosc);
+        }
+
+        for (KontoPracownika kontoPracownika : kontaPraciwnikow) {
+            session.save(kontoPracownika);
+        }
+
+        for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
+            session.save(klientIndywidualny);
+        }
+
+        for (KlientInstytucjonalny klientInstytucjonalny : klienciInstytucjonalni) {
+            session.save(klientInstytucjonalny);
+        }
+
+        for (KontoKlienta kontoKlienta : kontaKlientow) {
+            session.save(kontoKlienta);
+        }
+
+        for (Wypozyczenie wypozyczenie : wypozyczenia) {
+            session.save(wypozyczenie);
+        }
     }
 
     private List<Adres> generateAddresses(final int max) {
@@ -230,19 +312,39 @@ public class Generator {
 
         for (Samochod samochod : samochody) {
             for (TypZgloszenia typZgloszenia : typyZgloszen) {
-                Zgloszenie zgloszenie = new Zgloszenie();
-                zgloszenie.setCzyPoJezdzieProbnej(false);
-                zgloszenie.setOpisStanuSamochodu("Opis stanu samochodu...");
-                zgloszenie.setParametrySamochodu("Parametry...");
-                zgloszenie.setPriorytet(1);
-                zgloszenie.setStanCzystosci(1);
-                zgloszenie.setSamochod(samochod);
-                zgloszenie.setTypZgloszenia(typZgloszenia);
+                ZgloszenieWewnetrzne zgloszenieWewnetrzne = new ZgloszenieWewnetrzne();
+                zgloszenieWewnetrzne.setCzyPoJezdzieProbnej(false);
+                zgloszenieWewnetrzne.setOpisStanuSamochodu("Opis stanu samochodu...");
+                zgloszenieWewnetrzne.setParametrySamochodu("Parametry...");
+                zgloszenieWewnetrzne.setPriorytet(1);
+                zgloszenieWewnetrzne.setStanCzystosci(1);
+                zgloszenieWewnetrzne.setSamochod(samochod);
+                zgloszenieWewnetrzne.setTypZgloszenia(typZgloszenia);
 
-                zgloszenia.add(zgloszenie);
-                ++counter;
-                if (counter >= max)
-                    return;
+                zgloszeniaWewnetrzne.add(zgloszenieWewnetrzne);
+                if (++counter >= max)
+                    break;
+            }
+        }
+
+        counter = 0;
+        for (Samochod samochod : samochody) {
+            for (TypZgloszenia typZgloszenia : typyZgloszen) {
+                for (KlientInstytucjonalny klientInstytucjonalny : klienciInstytucjonalni) {
+                    ZgloszenieZewnetrzne zgloszenieZewnetrzne = new ZgloszenieZewnetrzne();
+                    zgloszenieZewnetrzne.setCzyPoJezdzieProbnej(false);
+                    zgloszenieZewnetrzne.setOpisStanuSamochodu("Opis stanu samochodu...");
+                    zgloszenieZewnetrzne.setParametrySamochodu("Parametry...");
+                    zgloszenieZewnetrzne.setPriorytet(1);
+                    zgloszenieZewnetrzne.setStanCzystosci(1);
+                    zgloszenieZewnetrzne.setSamochod(samochod);
+                    zgloszenieZewnetrzne.setTypZgloszenia(typZgloszenia);
+                    zgloszenieZewnetrzne.setKlient(klientInstytucjonalny);
+
+                    zgloszeniaZewnetrzne.add(zgloszenieZewnetrzne);
+                    if (++counter >= max)
+                        return;
+                }
             }
         }
     }
@@ -252,7 +354,7 @@ public class Generator {
 
         int counter = 0;
         for (Szeregowy szeregowy : szeregowi) {
-            for (Zgloszenie zgloszenie : zgloszenia) {
+            for (Zgloszenie zgloszenie : zgloszeniaWewnetrzne) {
                 Czynnosc czynnosc = new Czynnosc();
                 czynnosc.setDate(date);
                 czynnosc.setDescription("Opis Czynnosci");
@@ -358,17 +460,49 @@ public class Generator {
     }
 
     private void generujKontaKlientow() {
-        final String login = "Login";
-
         int counter = 0;
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
             KontoKlienta kontoKlienta = new KontoKlienta();
-            kontoKlienta.setLogin(login + " " + counter++);
+            kontoKlienta.setLogin(klientIndywidualny.getImie() + " " + klientIndywidualny.getNazwisko() + counter++);
+            kontaKlientow.add(kontoKlienta);
         }
 
         for (KlientInstytucjonalny klientInstytucjonalny : klienciInstytucjonalni) {
             KontoKlienta kontoKlienta = new KontoKlienta();
-            kontoKlienta.setLogin(login + " " + counter++);
+            kontoKlienta.setLogin(klientInstytucjonalny.getNIP() + " " + counter++);
+            kontaKlientow.add(kontoKlienta);
+        }
+    }
+
+    private void generujWypozyczenia() {
+        int counter = 0;
+        Date date1 = new Date();
+        Date date2 = new Date();
+
+        for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
+            Wypozyczenie wypozyczenie = new Wypozyczenie();
+            wypozyczenie.setDataWypozyczenia(date1);
+            wypozyczenie.setDataOddania(date2);
+            wypozyczenie.setKlient(klientIndywidualny);
+            wypozyczenie.setKwotaDoZaplaty(123.123f);
+            wypozyczenie.setMiejsceWypozyczenia(miasta[counter % miasta.length]);
+            wypozyczenie.setSamochod(samochody.get(counter));
+
+            wypozyczenia.add(wypozyczenie);
+            ++counter;
+        }
+
+        for (KlientInstytucjonalny klientInstytucjonalny : this.klienciInstytucjonalni) {
+            Wypozyczenie wypozyczenie = new Wypozyczenie();
+            wypozyczenie.setDataWypozyczenia(date1);
+            wypozyczenie.setDataOddania(date2);
+            wypozyczenie.setKlient(klientInstytucjonalny);
+            wypozyczenie.setKwotaDoZaplaty(123.123f);
+            wypozyczenie.setMiejsceWypozyczenia(miasta[counter % miasta.length]);
+            wypozyczenie.setSamochod(samochody.get(counter));
+
+            wypozyczenia.add(wypozyczenie);
+            ++counter;
         }
     }
 }

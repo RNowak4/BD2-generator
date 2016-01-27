@@ -32,9 +32,12 @@ public class Main {
     public static void main(final String[] args) throws Exception {
         final Session session = getSession();
         try {
+            Generator generator = new Generator();
+            generator.generate();
+
             session.beginTransaction();
 
-            // TODO ...
+            generator.save(session);
 
             session.getTransaction().commit();
 
