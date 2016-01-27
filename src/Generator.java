@@ -106,7 +106,7 @@ public class Generator {
         }
 
         for (KontoPracownika kontoPracownika : kontaPraciwnikow) {
-            session.save(kontoPracownika);
+//            session.save(kontoPracownika);
         }
 
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {

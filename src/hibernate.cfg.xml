@@ -31,6 +31,7 @@
         <mapping class="encje.Szeregowy"/>
         <mapping class="encje.TypZgloszenia"/>
         <mapping class="encje.Wypozyczalnia"/>
+        <mapping class="encje.Wypozyczenie"/>
         <mapping class="encje.Zgloszenie"/>
         <mapping class="encje.ZgloszenieWewnetrzne"/>
         <mapping class="encje.ZgloszenieZewnetrzne"/>
