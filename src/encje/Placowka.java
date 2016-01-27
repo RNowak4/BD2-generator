@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Placowka")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Placowka {
     @Id

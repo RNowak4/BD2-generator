@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "Wypozyczenie")
 public class Wypozyczenie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +28,7 @@ public class Wypozyczenie {
     private Date dataOddania;
 
     @Basic
-    @Column(name = "MiejsceWypozyczenia")
+    @Column(name = "MiejsceWypozyczenia", length = 32)
     private String miejsceWypozyczenia;
 
     @Basic

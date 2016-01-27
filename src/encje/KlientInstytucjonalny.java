@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "KlientInstytucjonalny")
 @PrimaryKeyJoinColumn(name="idKlienta")
 public class KlientInstytucjonalny extends Klient {
     @Basic

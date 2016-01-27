@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "Czynnosc")
 public class Czynnosc {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +16,7 @@ public class Czynnosc {
     private Date date;
 
     @Basic
-    @Column(name = "Opis")
+    @Column(name = "Opis", length = 256)
     private String description;
 
     @ManyToOne

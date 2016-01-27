@@ -24,7 +24,9 @@
         <mapping class="encje.Marka"/>
         <mapping class="encje.Material"/>
         <mapping class="encje.Placowka"/>
+        <mapping class="encje.Pozycja"/>
         <mapping class="encje.Pracownik"/>
+        <mapping class="encje.Rezerwacja"/>
         <mapping class="encje.RodzajUprawnien"/>
         <mapping class="encje.Samochod"/>
         <mapping class="encje.Serwis"/>
@@ -32,6 +34,7 @@
         <mapping class="encje.TypZgloszenia"/>
         <mapping class="encje.Wypozyczalnia"/>
         <mapping class="encje.Wypozyczenie"/>
+        <mapping class="encje.Zamowienie"/>
         <mapping class="encje.Zgloszenie"/>
         <mapping class="encje.ZgloszenieWewnetrzne"/>
         <mapping class="encje.ZgloszenieZewnetrzne"/>

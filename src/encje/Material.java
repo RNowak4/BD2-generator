@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Material")
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -10,7 +11,7 @@ public class Material {
     private Integer id;
 
     @Basic
-    @Column(name = "nazwa")
+    @Column(name = "nazwa", length = 64)
     private String nazwa;
 
     @Basic

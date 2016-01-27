@@ -1,11 +1,9 @@
 package encje;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "KlientIndywidualny")
 @PrimaryKeyJoinColumn(name="idKlienta")
 public class KlientIndywidualny extends Klient {
     @Basic

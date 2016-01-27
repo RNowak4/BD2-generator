@@ -3,10 +3,11 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Samochod")
 public class Samochod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="IdSamochodu")
+    @Column(name = "IdSamochodu")
     private Integer id;
 
     @ManyToOne
@@ -14,19 +15,19 @@ public class Samochod {
     private Marka marka;
 
     @Basic
-    @Column(name = "Model")
+    @Column(name = "Model", length = 32)
     private String model;
 
     @Basic
-    @Column(name = "Rok_Produkcji")
+    @Column(name = "Rok_Produkcji", length = 8)
     private String rokProdukcji;
 
     @Basic
-    @Column(name = "Przebieg")
+    @Column(name = "Przebieg", length = 32)
     private String przebieg;
 
     @Basic
-    @Column(name = "Kolor")
+    @Column(name = "Kolor", length = 32)
     private String kolor;
 
     @ManyToOne

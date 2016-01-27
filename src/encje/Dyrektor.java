@@ -3,9 +3,11 @@ package encje;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name="idPracownika")
+@Table(name = "Dyrektor")
+@PrimaryKeyJoinColumn(name = "idPracownika")
 public class Dyrektor extends Pracownik {
     @OneToOne
     private Placowka placowka;

@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Zgloszenie")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Zgloszenie {
     @Id
@@ -23,11 +24,11 @@ public class Zgloszenie {
     private Samochod samochod;
 
     @Basic
-    @Column(name = "OpisStanuSamochodu")
+    @Column(name = "OpisStanuSamochodu", length = 256)
     private String opisStanuSamochodu;
 
     @Basic
-    @Column(name = "ParametrySamochodu")
+    @Column(name = "ParametrySamochodu", length = 256)
     private String parametrySamochodu;
 
     @Basic

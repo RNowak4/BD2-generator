@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "KategoriaPojazdu")
 public class KategoriaPojazdu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -10,7 +11,7 @@ public class KategoriaPojazdu {
     private Integer id;
 
     @Basic
-    @Column(name = "NazwaKategorii")
+    @Column(name = "NazwaKategorii", length = 32)
     private String nazwa;
 
     public Integer getId() {

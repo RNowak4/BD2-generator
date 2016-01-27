@@ -3,7 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="Adres")
+@Table(name = "Adres")
 public class Adres {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,19 +11,19 @@ public class Adres {
     private Integer id;
 
     @Basic
-    @Column(name = "Miasto")
+    @Column(name = "Miasto", length = 32)
     private String miasto;
 
     @Basic
-    @Column(name = "Ulica")
+    @Column(name = "Ulica", length = 32)
     private String ulica;
 
     @Basic
-    @Column(name = "NrDomu")
+    @Column(name = "NrDomu", length = 8)
     private String nrDomu;
 
     @Basic
-    @Column(name = "KodPocztowy")
+    @Column(name = "KodPocztowy", length = 8)
     private String kodPocztowy;
 
     public Integer getId() {

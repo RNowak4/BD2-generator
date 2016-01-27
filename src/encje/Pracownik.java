@@ -3,6 +3,7 @@ package encje;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Pracownik")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Pracownik {
     @Id
@@ -11,15 +12,15 @@ public class Pracownik {
     private Integer id;
 
     @Basic
-    @Column(name = "Imie")
+    @Column(name = "Imie", length = 16)
     private String imie;
 
     @Basic
-    @Column(name = "Nazwisko")
+    @Column(name = "Nazwisko", length = 16)
     private String nazwisko;
 
     @Basic
-    @Column(name = "PESEL")
+    @Column(name = "PESEL", length = 16)
     private String pesel;
 
     @ManyToOne

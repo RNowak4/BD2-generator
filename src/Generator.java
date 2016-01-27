@@ -24,8 +24,12 @@ public class Generator {
     private List<KontoPracownika> kontaPraciwnikow = new ArrayList<>();
     private List<KlientIndywidualny> klienciIndywidualni = new ArrayList<>();
     private List<KlientInstytucjonalny> klienciInstytucjonalni = new ArrayList<>();
+    private List<Material> materialy = new ArrayList<>();
     private List<KontoKlienta> kontaKlientow = new ArrayList<>();
     private List<Wypozyczenie> wypozyczenia = new ArrayList<>();
+    private List<Rezerwacja> rezerwacje = new ArrayList<>();
+    private List<Zamowienie> zamowienia = new ArrayList<>();
+    private List<Pozycja> pozycje = new ArrayList<>();
 
     private static String[] miasta = {"Warszawa", "Poznan", "Gdansk", "Rzeszow", "Krakow"};
     private static String[] poczt = {"11-111", "22-222", "33-333", "44-444", "55-555"};
@@ -34,7 +38,7 @@ public class Generator {
     public void generate() {
         generateAddresses(3500);
         generateWorkers(0, 1000);
-        generujPlacowki(0, 1001, 150);
+        generujPlacowki(1001, 150);
         generujMarki();
         generujKategoriePojazdu();
         generujSamochody();
@@ -46,6 +50,9 @@ public class Generator {
         generujWypozyczenia();
         generujZgloszenia(1500);
         generujCzynnosci(1500);
+        generujRezerwacje(500);
+        generujZamowienia();
+        generujPozycje();
     }
 
     public void save(final Session session) {
@@ -105,9 +112,9 @@ public class Generator {
             session.save(czynnosc);
         }
 
-        for (KontoPracownika kontoPracownika : kontaPraciwnikow) {
+//        for (KontoPracownika kontoPracownika : kontaPraciwnikow) {
 //            session.save(kontoPracownika);
-        }
+//        }
 
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
             session.save(klientIndywidualny);
@@ -123,6 +130,22 @@ public class Generator {
 
         for (Wypozyczenie wypozyczenie : wypozyczenia) {
             session.save(wypozyczenie);
+        }
+
+        for (Rezerwacja rezerwacja : rezerwacje) {
+//            session.save(rezerwacja);
+        }
+
+        for (Zamowienie zamowienie : zamowienia) {
+            session.save(zamowienie);
+        }
+
+        for (Material material : materialy) {
+            session.save(material);
+        }
+
+        for (Pozycja pozycja : pozycje) {
+            session.save(pozycja);
         }
     }
 
@@ -155,18 +178,16 @@ public class Generator {
 
     private void generateWorkers(final int startAddress, final int stopAddress) {
         final int totalNum = stopAddress - startAddress;
-        String pesel = "11111122556";
+        Long pesel = 11111122556L;
 
         int counter = 0;
         for (int i = 0; i < 1; i++) {
             for (String name : names) {
                 for (String surname : surnames) {
-                    pesel = "" + (Long.valueOf(pesel) + 1);
-
                     Dyrektor dyrektor = new Dyrektor();
                     dyrektor.setImie(name);
                     dyrektor.setNazwisko(surname);
-                    dyrektor.setPesel(pesel);
+                    dyrektor.setPesel("" + pesel++);
                     dyrektor.setAdres(adresy.get(startAddress + counter));
 
                     dyrektorzy.add(dyrektor);
@@ -180,12 +201,10 @@ public class Generator {
         for (int i = 0; i < 2; i++) {
             for (String name : names) {
                 for (String surname : surnames) {
-                    pesel = "" + (Long.valueOf(pesel) + 1);
-
                     Kierownik kierownik = new Kierownik();
                     kierownik.setImie(name);
                     kierownik.setNazwisko(surname);
-                    kierownik.setPesel(pesel);
+                    kierownik.setPesel("" + pesel++);
                     kierownik.setAdres(adresy.get(startAddress + counter));
 
                     kierownicy.add(kierownik);
@@ -199,12 +218,10 @@ public class Generator {
         for (int i = 0; i < 7; i++) {
             for (String name : names) {
                 for (String surname : surnames) {
-                    pesel = "" + (Long.valueOf(pesel) + 1);
-
                     Szeregowy szeregowy = new Szeregowy();
                     szeregowy.setImie(name);
                     szeregowy.setNazwisko(surname);
-                    szeregowy.setPesel(pesel);
+                    szeregowy.setPesel("" + pesel++);
                     szeregowy.setAdres(adresy.get(startAddress + counter));
 
                     szeregowi.add(szeregowy);
@@ -216,13 +233,15 @@ public class Generator {
         }
     }
 
-    private void generujPlacowki(final int startPrac, final int startAdres, final int wypNum) {
+    private void generujPlacowki(final int startAdres, final int wypNum) {
         int i = 0;
         for (int j = 0; j < dyrektorzy.size(); j++, i++) {
             Wypozyczalnia wypozyczalnia = new Wypozyczalnia();
             wypozyczalnia.setAdres(adresy.get(startAdres + i));
-            wypozyczalnia.setPracownik(szeregowi.get(startPrac + i));
-            wypozyczalnia.setDyrektor(dyrektorzy.get(startPrac + i));
+            wypozyczalnia.setPracownik(szeregowi.get(i));
+            Dyrektor dyrektor = dyrektorzy.get(dyrektorzy.size() - i - 1);
+            dyrektor.setPlacowka(wypozyczalnia);
+            wypozyczalnia.setDyrektor(dyrektor);
 
             wypozyczalnie.add(wypozyczalnia);
         }
@@ -230,7 +249,7 @@ public class Generator {
         for (int j = 0; j < wypNum / 2; j++, i++) {
             Magazyn magazyn = new Magazyn();
             magazyn.setAdres(adresy.get(startAdres + i));
-            magazyn.setPracownik(kierownicy.get(startPrac + i));
+            magazyn.setPracownik(kierownicy.get(j));
             magazyn.setWypozyczalnia(wypozyczalnie.get(j));
 
             magazyny.add(magazyn);
@@ -239,7 +258,7 @@ public class Generator {
         for (int j = wypNum / 2 + 1; j < wypozyczalnie.size(); j++, i++) {
             Serwis serwis = new Serwis();
             serwis.setAdres(adresy.get(startAdres + i));
-            serwis.setPracownik(kierownicy.get(startPrac + i));
+            serwis.setPracownik(kierownicy.get(j));
             serwis.setWypozyczalnia(wypozyczalnie.get(j));
 
             serwisy.add(serwis);
@@ -286,7 +305,7 @@ public class Generator {
                             samochod.setMarka(marka);
                             samochod.setModel(model);
                             samochod.setPrzebieg("" + Math.abs(random.nextLong() % 300000));
-                            samochod.setRokProdukcji("" + Math.abs(random.nextLong() % 25) + 1990);
+                            samochod.setRokProdukcji("" + (Math.abs(random.nextLong() % 25)) + 1980);
 
                             samochody.add(samochod);
                         }
@@ -308,12 +327,13 @@ public class Generator {
     }
 
     private void generujZgloszenia(final int max) {
+        final Random random = new Random();
         int counter = 0;
 
         for (Samochod samochod : samochody) {
             for (TypZgloszenia typZgloszenia : typyZgloszen) {
                 ZgloszenieWewnetrzne zgloszenieWewnetrzne = new ZgloszenieWewnetrzne();
-                zgloszenieWewnetrzne.setCzyPoJezdzieProbnej(false);
+                zgloszenieWewnetrzne.setCzyPoJezdzieProbnej(random.nextBoolean());
                 zgloszenieWewnetrzne.setOpisStanuSamochodu("Opis stanu samochodu...");
                 zgloszenieWewnetrzne.setParametrySamochodu("Parametry...");
                 zgloszenieWewnetrzne.setPriorytet(1);
@@ -381,7 +401,7 @@ public class Generator {
                     material.setPlacowka(magazyn);
                     material.setPracownik(szeregowy);
 
-                    magazyny.add(magazyn);
+                    materialy.add(material);
                     if (++counter >= max)
                         return;
 
@@ -461,14 +481,17 @@ public class Generator {
 
     private void generujKontaKlientow() {
         int counter = 0;
+        final String haslo = "H@$l0";
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
             KontoKlienta kontoKlienta = new KontoKlienta();
+            kontoKlienta.setHaslo(haslo + counter);
             kontoKlienta.setLogin(klientIndywidualny.getImie() + " " + klientIndywidualny.getNazwisko() + counter++);
             kontaKlientow.add(kontoKlienta);
         }
 
         for (KlientInstytucjonalny klientInstytucjonalny : klienciInstytucjonalni) {
             KontoKlienta kontoKlienta = new KontoKlienta();
+            kontoKlienta.setHaslo(haslo + counter);
             kontoKlienta.setLogin(klientInstytucjonalny.getNIP() + " " + counter++);
             kontaKlientow.add(kontoKlienta);
         }
@@ -503,6 +526,68 @@ public class Generator {
 
             wypozyczenia.add(wypozyczenie);
             ++counter;
+        }
+    }
+
+    private void generujRezerwacje(final int max) {
+        int counter = 0;
+        final Random random = new Random();
+        for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
+            Rezerwacja rezerwacja = new Rezerwacja();
+            rezerwacja.setKlient(klientIndywidualny);
+            rezerwacja.setKategoriaPojazdu(kategoriePojazdu.get(counter % kategoriePojazdu.size()));
+            rezerwacja.setMiejsceOdbioru(miasta[counter % miasta.length]);
+            rezerwacja.setRabat(Math.abs(random.nextInt()) % 1500);
+            rezerwacja.setPotwierdzenieRezerwacji(random.nextBoolean());
+            rezerwacja.setSposobDostarczeniaRezerwacji("Sposob dostarczenia rezerwacji");
+
+            rezerwacje.add(rezerwacja);
+            if (++counter >= max)
+                break;
+        }
+
+        counter = 0;
+        for (KlientInstytucjonalny klientInstytucjonalny : klienciInstytucjonalni) {
+            Rezerwacja rezerwacja = new Rezerwacja();
+            rezerwacja.setKlient(klientInstytucjonalny);
+            rezerwacja.setKategoriaPojazdu(kategoriePojazdu.get(counter % kategoriePojazdu.size()));
+            rezerwacja.setMiejsceOdbioru(miasta[counter % miasta.length]);
+            rezerwacja.setRabat(Math.abs(random.nextInt()) % 1500);
+            rezerwacja.setPotwierdzenieRezerwacji(random.nextBoolean());
+            rezerwacja.setSposobDostarczeniaRezerwacji("Sposob dostarczenia rezerwacji");
+
+            rezerwacje.add(rezerwacja);
+            if (++counter >= max)
+                break;
+        }
+    }
+
+    private void generujZamowienia() {
+        final Random random = new Random();
+        final Date date = new Date();
+        for (Magazyn magazyn : magazyny) {
+            for (int i = 0; i < Math.abs(random.nextInt()) % 20 + 10; i++) {
+                Zamowienie zamowienie = new Zamowienie();
+                zamowienie.setDate(date);
+                zamowienie.setMagazyn(magazyn);
+                zamowienie.setNazwaDostawcy("Nazwa Dostawcy...");
+
+                zamowienia.add(zamowienie);
+            }
+        }
+    }
+
+    private void generujPozycje() {
+        final Random random = new Random();
+        for (Zamowienie zamowienie : zamowienia) {
+            for (Material material : materialy) {
+                Pozycja pozycja = new Pozycja();
+                pozycja.setLiczba(Math.abs(random.nextInt()) % 1500 + 150);
+                pozycja.setMaterial(material);
+                pozycja.setZamowienie(zamowienie);
+
+                pozycje.add(pozycja);
+            }
         }
     }
 }

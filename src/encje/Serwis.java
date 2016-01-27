@@ -1,11 +1,9 @@
 package encje;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Serwis")
 @PrimaryKeyJoinColumn(name="idPlacowki")
 public class Serwis extends Placowka {
     @ManyToOne

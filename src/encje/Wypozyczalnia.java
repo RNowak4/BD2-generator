@@ -3,8 +3,10 @@ package encje;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Wypozyczalnia")
 @PrimaryKeyJoinColumn(name="idPlacowki")
 public class Wypozyczalnia extends Placowka {
     @OneToOne
