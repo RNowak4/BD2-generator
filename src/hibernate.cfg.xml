@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/db</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">admin</property>
+        <property name="hbm2ddl.auto">create</property>
+
+        <mapping class="encje.Adres"/>
+        <mapping class="encje.Czynnosc"/>
+        <mapping class="encje.Dyrektor"/>
+        <mapping class="encje.KategoriaPojazdu"/>
+        <mapping class="encje.Kierownik"/>
+        <mapping class="encje.Klient"/>
+        <mapping class="encje.KlientIndywidualny"/>
+        <mapping class="encje.KlientInstytucjonalny"/>
+        <mapping class="encje.KontoKlienta"/>
+        <mapping class="encje.KontoPracownika"/>
+        <mapping class="encje.Magazyn"/>
+        <mapping class="encje.Marka"/>
+        <mapping class="encje.Material"/>
+        <mapping class="encje.Placowka"/>
+        <mapping class="encje.Pracownik"/>
+        <mapping class="encje.RodzajUprawnien"/>
+        <mapping class="encje.Samochod"/>
+        <mapping class="encje.Serwis"/>
+        <mapping class="encje.Szeregowy"/>
+        <mapping class="encje.TypZgloszenia"/>
+        <mapping class="encje.Wypozyczalnia"/>
+        <mapping class="encje.Zgloszenie"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
