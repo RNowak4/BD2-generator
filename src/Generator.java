@@ -500,6 +500,7 @@ public class Generator {
     private void generujWypozyczenia() {
         int counter = 0;
         Date date1 = new Date();
+        date1.setTime(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 7/*tydzien*/);
         Date date2 = new Date();
 
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
