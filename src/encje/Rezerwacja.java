@@ -31,7 +31,7 @@ public class Rezerwacja {
     private String sposobDostarczeniaRezerwacji;
 
     @Basic
-    @Column(name = "Potwierdzenie rezerwacji")
+    @Column(name = "Potwierdzenierezerwacji")
     private boolean potwierdzenieRezerwacji;
 
     public int getId() {

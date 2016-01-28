@@ -133,7 +133,7 @@ public class Generator {
         }
 
         for (Rezerwacja rezerwacja : rezerwacje) {
-//            session.save(rezerwacja);
+            session.save(rezerwacja);
         }
 
         for (Zamowienie zamowienie : zamowienia) {
