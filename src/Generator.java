@@ -531,6 +531,9 @@ public class Generator {
 
     private void generujRezerwacje(final int max) {
         int counter = 0;
+        final Date datePrev = new Date();
+        datePrev.setTime(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 7/*tydzien*/);
+        final Date dateFor = new Date();
         final Random random = new Random();
         for (KlientIndywidualny klientIndywidualny : klienciIndywidualni) {
             Rezerwacja rezerwacja = new Rezerwacja();
@@ -540,6 +543,8 @@ public class Generator {
             rezerwacja.setRabat(Math.abs(random.nextInt()) % 1500);
             rezerwacja.setPotwierdzenieRezerwacji(random.nextBoolean());
             rezerwacja.setSposobDostarczeniaRezerwacji("Sposob dostarczenia rezerwacji");
+            rezerwacja.setDataWypozyczenia(datePrev);
+            rezerwacja.setDataOddania(dateFor);
 
             rezerwacje.add(rezerwacja);
             if (++counter >= max)
@@ -555,6 +560,8 @@ public class Generator {
             rezerwacja.setRabat(Math.abs(random.nextInt()) % 1500);
             rezerwacja.setPotwierdzenieRezerwacji(random.nextBoolean());
             rezerwacja.setSposobDostarczeniaRezerwacji("Sposob dostarczenia rezerwacji");
+            rezerwacja.setDataWypozyczenia(datePrev);
+            rezerwacja.setDataOddania(dateFor);
 
             rezerwacje.add(rezerwacja);
             if (++counter >= max)

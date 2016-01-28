@@ -1,6 +1,7 @@
 package encje;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Rezerwacja")
@@ -33,6 +34,30 @@ public class Rezerwacja {
     @Basic
     @Column(name = "Potwierdzenierezerwacji")
     private boolean potwierdzenieRezerwacji;
+
+    @Basic
+    @Column(name = "DataWypozyczenia")
+    private Date dataWypozyczenia;
+
+    @Basic
+    @Column(name = "DataOddania")
+    private Date dataOddania;
+
+    public Date getDataWypozyczenia() {
+        return dataWypozyczenia;
+    }
+
+    public void setDataWypozyczenia(Date dataWypozyczenia) {
+        this.dataWypozyczenia = dataWypozyczenia;
+    }
+
+    public Date getDataOddania() {
+        return dataOddania;
+    }
+
+    public void setDataOddania(Date dataOddania) {
+        this.dataOddania = dataOddania;
+    }
 
     public int getId() {
         return id;
@@ -105,7 +130,11 @@ public class Rezerwacja {
             return false;
         if (miejsceOdbioru != null ? !miejsceOdbioru.equals(that.miejsceOdbioru) : that.miejsceOdbioru != null)
             return false;
-        return !(sposobDostarczeniaRezerwacji != null ? !sposobDostarczeniaRezerwacji.equals(that.sposobDostarczeniaRezerwacji) : that.sposobDostarczeniaRezerwacji != null);
+        if (sposobDostarczeniaRezerwacji != null ? !sposobDostarczeniaRezerwacji.equals(that.sposobDostarczeniaRezerwacji) : that.sposobDostarczeniaRezerwacji != null)
+            return false;
+        if (dataWypozyczenia != null ? !dataWypozyczenia.equals(that.dataWypozyczenia) : that.dataWypozyczenia != null)
+            return false;
+        return dataOddania != null ? dataOddania.equals(that.dataOddania) : that.dataOddania == null;
 
     }
 
@@ -118,6 +147,8 @@ public class Rezerwacja {
         result = 31 * result + (miejsceOdbioru != null ? miejsceOdbioru.hashCode() : 0);
         result = 31 * result + (sposobDostarczeniaRezerwacji != null ? sposobDostarczeniaRezerwacji.hashCode() : 0);
         result = 31 * result + (potwierdzenieRezerwacji ? 1 : 0);
+        result = 31 * result + (dataWypozyczenia != null ? dataWypozyczenia.hashCode() : 0);
+        result = 31 * result + (dataOddania != null ? dataOddania.hashCode() : 0);
         return result;
     }
 }
